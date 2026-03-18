@@ -1,0 +1,150 @@
+---
+import { hero } from '../data/content.js';
+---
+
+<section class="hero" aria-label="Introduction">
+  <div class="container">
+    <div class="hero-content">
+
+      <p class="hero-eyebrow reveal">{hero.eyebrow}</p>
+
+      <h1 class="hero-headline reveal reveal-delay-1">
+        {hero.headline}
+      </h1>
+
+      <p class="hero-subhead reveal reveal-delay-2">
+        {hero.subhead}
+      </p>
+
+      <div class="hero-ctas reveal reveal-delay-3">
+        {hero.ctas.map((cta) => (
+          <a href={cta.href} class={`btn btn-${cta.variant}`}>
+            {cta.label}
+          </a>
+        ))}
+      </div>
+
+    </div>
+
+    <blockquote class="hero-soundbite reveal reveal-delay-4" aria-label="Featured quote">
+      <span class="soundbite-mark" aria-hidden="true">&ldquo;</span>
+      <p class="soundbite-text">{hero.featuredQuote}</p>
+    </blockquote>
+
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: var(--sp-16);
+    padding-bottom: var(--sp-20);
+    min-height: 90svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      padding-top: var(--sp-20);
+      padding-bottom: var(--sp-24);
+      min-height: 88vh;
+    }
+  }
+
+  /* ── Content ─────────────────────────────────────────────────── */
+  .hero-content {
+    max-width: 840px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--sp-5);
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--color-text);
+    margin-bottom: var(--sp-6);
+  }
+
+  .hero-subhead {
+    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: var(--sp-8);
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    align-items: center;
+  }
+
+  /* ── Soundbite ───────────────────────────────────────────────── */
+  .hero-soundbite {
+    margin-top: var(--sp-16);
+    padding: var(--sp-8) var(--sp-8);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    max-width: 640px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-soundbite::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--color-accent);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  }
+
+  @media (min-width: 768px) {
+    .hero-soundbite {
+      padding: var(--sp-10) var(--sp-12);
+    }
+  }
+
+  .soundbite-mark {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    line-height: 0.6;
+    color: var(--color-accent);
+    margin-bottom: var(--sp-3);
+    user-select: none;
+  }
+
+  .soundbite-text {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1875rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--color-text);
+  }
+</style>

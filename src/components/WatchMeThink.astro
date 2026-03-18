@@ -1,0 +1,266 @@
+---
+import { watchMeThink } from '../data/content.js';
+---
+
+<section class="section watch-me-think" id="watch" aria-labelledby="watch-heading">
+  <div class="container">
+
+    <header class="section-header reveal">
+      <p class="section-eyebrow">Video</p>
+      <h2 class="section-heading" id="watch-heading">{watchMeThink.heading}</h2>
+      <p class="section-subhead">{watchMeThink.subhead}</p>
+    </header>
+
+    <!-- Featured video -->
+    <a
+      href={watchMeThink.featured.href}
+      class="featured-video reveal"
+      aria-label={`Watch: ${watchMeThink.featured.title}`}
+    >
+      <div class="featured-thumb" aria-hidden="true">
+        <div class="play-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1.5" fill="none" />
+            <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="white" />
+          </svg>
+        </div>
+        <span class="featured-tag">{watchMeThink.featured.tag}</span>
+      </div>
+      <div class="featured-info">
+        <h3 class="video-title">{watchMeThink.featured.title}</h3>
+        <p class="video-context">{watchMeThink.featured.context}</p>
+        <span class="watch-link">Watch <span aria-hidden="true">&rarr;</span></span>
+      </div>
+    </a>
+
+    <!-- Video grid -->
+    <div class="video-grid" role="list" aria-label="More videos">
+      {watchMeThink.videos.map((v, i) => (
+        <a
+          href={v.href}
+          class={`video-card reveal reveal-delay-${(i % 4) + 1}`}
+          role="listitem"
+          aria-label={`Watch: ${v.title}`}
+        >
+          <div class="video-thumb" aria-hidden="true">
+            <div class="play-btn play-btn-sm">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1.5" fill="none" />
+                <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="white" />
+              </svg>
+            </div>
+          </div>
+          <div class="card-info">
+            <span class="card-tag">{v.tag}</span>
+            <h3 class="card-title">{v.title}</h3>
+            <p class="card-context">{v.context}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .watch-me-think {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-header {
+    margin-bottom: var(--sp-10);
+  }
+
+  /* ── Featured video ──────────────────────────────────────────── */
+  .featured-video {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    margin-bottom: var(--sp-8);
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+
+  .featured-video:hover {
+    box-shadow: 0 12px 40px rgba(28, 26, 23, 0.1);
+    transform: translateY(-3px);
+  }
+
+  .featured-video:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (min-width: 768px) {
+    .featured-video {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .featured-thumb {
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #1C1A17 0%, #2d2a24 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 220px;
+  }
+
+  @media (min-width: 768px) {
+    .featured-thumb {
+      aspect-ratio: auto;
+      min-height: 320px;
+    }
+  }
+
+  .featured-tag {
+    position: absolute;
+    top: var(--sp-4);
+    left: var(--sp-4);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--color-accent);
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-pill);
+  }
+
+  .featured-info {
+    padding: var(--sp-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--sp-3);
+  }
+
+  @media (min-width: 768px) {
+    .featured-info { padding: var(--sp-10) var(--sp-10); }
+  }
+
+  .video-title {
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    color: var(--color-text);
+  }
+
+  .video-context {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .watch-link {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-top: var(--sp-2);
+  }
+
+  /* ── Play button ─────────────────────────────────────────────── */
+  .play-btn {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    transition: background var(--ease), transform var(--ease);
+  }
+
+  .featured-video:hover .play-btn {
+    background: var(--color-accent);
+    transform: scale(1.08);
+  }
+
+  .play-btn-sm {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* ── Video grid ──────────────────────────────────────────────── */
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+  }
+
+  @media (min-width: 640px) {
+    .video-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (min-width: 1024px) {
+    .video-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .video-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+
+  .video-card:hover {
+    box-shadow: 0 8px 28px rgba(28, 26, 23, 0.09);
+    transform: translateY(-2px);
+  }
+
+  .video-card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .video-thumb {
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #28251f 0%, #383229 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-card:hover .play-btn-sm {
+    background: var(--color-accent);
+  }
+
+  .card-info {
+    padding: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1;
+  }
+
+  .card-tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .card-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+    color: var(--color-text);
+  }
+
+  .card-context {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+</style>

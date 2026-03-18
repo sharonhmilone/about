@@ -1,0 +1,167 @@
+---
+import { ctaFooter } from '../data/content.js';
+---
+
+<footer id="contact">
+  <!-- CTA Section -->
+  <section class="cta-section" aria-labelledby="cta-heading">
+    <div class="container cta-inner">
+      <div class="cta-content reveal">
+        <p class="section-eyebrow eyebrow-light">Ready when you are</p>
+        <h2 class="cta-heading" id="cta-heading">{ctaFooter.heading}</h2>
+        <p class="cta-subhead">{ctaFooter.subhead}</p>
+        <div class="cta-buttons">
+          {ctaFooter.ctas.map((cta) => (
+            <a
+              href={cta.href}
+              class={`btn ${cta.variant === 'primary' ? 'btn-cta-primary' : 'btn-ghost-light'}`}
+            >
+              {cta.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="container bottom-inner">
+      <span class="copyright">{ctaFooter.copyright}</span>
+      <span class="tagline">Champion of Joy</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ── CTA section ─────────────────────────────────────────────── */
+  .cta-section {
+    background: var(--color-dark);
+    padding-block: var(--sp-24);
+  }
+
+  @media (min-width: 768px) {
+    .cta-section {
+      padding-block: var(--sp-24);
+    }
+  }
+
+  .cta-inner {
+    max-width: 720px;
+  }
+
+  .eyebrow-light {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .eyebrow-light::before {
+    background: var(--color-accent);
+  }
+
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--sp-4);
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    flex-shrink: 0;
+  }
+
+  .cta-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+  }
+
+  .cta-heading {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.0;
+    color: #fff;
+  }
+
+  .cta-subhead {
+    font-size: clamp(1rem, 1.5vw, 1.1875rem);
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 520px;
+    line-height: 1.65;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    padding-top: var(--sp-2);
+  }
+
+  .btn-cta-primary {
+    background: var(--color-accent);
+    color: #fff;
+    border: 2px solid var(--color-accent);
+    padding: 0.875rem 1.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+    transition: background var(--ease), transform var(--ease), box-shadow var(--ease);
+  }
+
+  .btn-cta-primary:hover {
+    background: #b35420;
+    border-color: #b35420;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 97, 39, 0.4);
+  }
+
+  .btn-ghost-light {
+    padding: 0.875rem 1.75rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* ── Bottom bar ──────────────────────────────────────────────── */
+  .bottom-bar {
+    background: #111;
+    padding-block: var(--sp-5);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+  }
+
+  .copyright {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .tagline {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    opacity: 0.8;
+  }
+</style>

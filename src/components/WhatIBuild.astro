@@ -1,0 +1,149 @@
+---
+import { whatIBuild } from '../data/content.js';
+---
+
+<section class="section what-i-build" id="work" aria-labelledby="work-heading">
+  <div class="container">
+
+    <header class="section-header reveal">
+      <p class="section-eyebrow">Work</p>
+      <h2 class="section-heading" id="work-heading">{whatIBuild.heading}</h2>
+      <p class="section-subhead">{whatIBuild.subhead}</p>
+    </header>
+
+    <div class="pillars">
+      {whatIBuild.pillars.map((pillar, i) => (
+        <article
+          class={`pillar reveal reveal-delay-${i + 1} ${pillar.accent ? 'pillar--accent' : ''}`}
+          aria-labelledby={`pillar-${i}`}
+        >
+          <div class="pillar-inner">
+            <span class="pillar-num" aria-hidden="true">0{i + 1}</span>
+            <h3 class="pillar-label" id={`pillar-${i}`}>{pillar.label}</h3>
+            <p class="pillar-desc">{pillar.description}</p>
+            <ul class="pillar-examples" aria-label={`${pillar.label} examples`}>
+              {pillar.examples.map((ex) => (
+                <li class="pillar-example">
+                  <span class="example-dot" aria-hidden="true"></span>
+                  <span>{ex}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .what-i-build {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-header {
+    margin-bottom: var(--sp-12);
+  }
+
+  /* ── Pillars layout ──────────────────────────────────────────── */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+  }
+
+  @media (min-width: 768px) {
+    .pillars {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* ── Single pillar ───────────────────────────────────────────── */
+  .pillar {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow var(--ease), transform var(--ease);
+  }
+
+  .pillar:hover {
+    box-shadow: 0 10px 36px rgba(28, 26, 23, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .pillar--accent {
+    border-color: var(--color-accent);
+  }
+
+  .pillar-inner {
+    padding: var(--sp-8);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    position: relative;
+  }
+
+  .pillar--accent .pillar-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--color-accent);
+  }
+
+  .pillar-num {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .pillar-label {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--color-text);
+  }
+
+  .pillar-desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* ── Examples ────────────────────────────────────────────────── */
+  .pillar-examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    flex: 1;
+  }
+
+  .pillar-example {
+    display: grid;
+    grid-template-columns: 10px 1fr;
+    gap: var(--sp-3);
+    align-items: start;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  .example-dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    margin-top: 0.45em;
+    flex-shrink: 0;
+  }
+</style>

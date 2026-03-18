@@ -1,0 +1,141 @@
+---
+import { proofStrip } from '../data/content.js';
+---
+
+<section class="proof-strip" aria-label="Credentials and working style">
+  <div class="container">
+
+    <!-- Logo row -->
+    <p class="strip-label">{proofStrip.label}</p>
+    <div class="logo-track h-scroll" role="list" aria-label="Organizations worked with">
+      {proofStrip.logos.map((logo) => (
+        <div class="logo-item" role="listitem">
+          <span class="logo-text">{logo.name}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="strip-divider" role="separator" aria-hidden="true"></div>
+
+    <!-- Chips -->
+    <p class="chip-label">How I work</p>
+    <div class="chip-track h-scroll" role="list" aria-label="Working style">
+      {proofStrip.chips.map((chip) => (
+        <span class="chip" role="listitem">{chip}</span>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .proof-strip {
+    background: var(--color-surface);
+    padding-block: var(--sp-12);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* ── Labels ──────────────────────────────────────────────────── */
+  .strip-label,
+  .chip-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--sp-4);
+  }
+
+  .chip-label {
+    margin-top: 0;
+  }
+
+  /* ── Logo track ──────────────────────────────────────────────── */
+  .logo-track {
+    /* Bleed to screen edges on mobile */
+    margin-inline: calc(-1 * var(--sp-6));
+    padding-inline: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    gap: var(--sp-2);
+  }
+
+  @media (min-width: 768px) {
+    .logo-track {
+      margin-inline: 0;
+      padding-inline: 0;
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+  }
+
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-3) var(--sp-6);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    min-width: 140px;
+    height: 52px;
+    transition: border-color var(--ease), background var(--ease);
+  }
+
+  .logo-item:hover {
+    border-color: var(--color-text-muted);
+    background: var(--color-surface);
+  }
+
+  .logo-text {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  /* ── Divider ─────────────────────────────────────────────────── */
+  .strip-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin-block: var(--sp-8);
+  }
+
+  /* ── Chip track ──────────────────────────────────────────────── */
+  .chip-track {
+    margin-inline: calc(-1 * var(--sp-6));
+    padding-inline: var(--sp-6);
+    gap: var(--sp-2);
+  }
+
+  @media (min-width: 768px) {
+    .chip-track {
+      margin-inline: 0;
+      padding-inline: 0;
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.0625rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-border);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    background: var(--color-bg);
+    white-space: nowrap;
+    transition: border-color var(--ease), background var(--ease), color var(--ease);
+  }
+
+  .chip:nth-child(odd):hover,
+  .chip:nth-child(even):hover {
+    background: var(--color-accent-subtle);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+</style>

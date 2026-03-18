@@ -1,0 +1,103 @@
+---
+import { whatToExpect } from '../data/content.js';
+---
+
+<section class="section what-to-expect" id="expect" aria-labelledby="expect-heading">
+  <div class="container">
+
+    <header class="section-header reveal">
+      <p class="section-eyebrow">For hiring managers</p>
+      <h2 class="section-heading" id="expect-heading">{whatToExpect.heading}</h2>
+      <p class="section-subhead">{whatToExpect.subhead}</p>
+    </header>
+
+    <ul class="traits" aria-label="Working traits">
+      {whatToExpect.traits.map((trait, i) => (
+        <li class={`trait reveal reveal-delay-${(i % 4) + 1}`}>
+          <span class="trait-check" aria-hidden="true">✓</span>
+          <div class="trait-content">
+            <strong class="trait-label">{trait.label}</strong>
+            <span class="trait-desc">{trait.description}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .what-to-expect {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-header {
+    margin-bottom: var(--sp-10);
+  }
+
+  /* ── Traits list ─────────────────────────────────────────────── */
+  .traits {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  @media (min-width: 768px) {
+    .traits {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .trait {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-5);
+    padding: var(--sp-6) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .trait:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 768px) {
+    .trait:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+  }
+
+  .trait-check {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .trait-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+  }
+
+  .trait-label {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  .trait-desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+</style>
