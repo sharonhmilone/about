@@ -4,147 +4,192 @@ import { hero } from '../data/content.js';
 
 <section class="hero" aria-label="Introduction">
   <div class="container">
+
     <div class="hero-content">
+      <p class="hero-eyebrow reveal">
+        <span class="eyebrow-script">{hero.eyebrow}</span>
+      </p>
 
-      <p class="hero-eyebrow reveal">{hero.eyebrow}</p>
-
-      <h1 class="hero-headline reveal reveal-delay-1">
-        {hero.headline}
+      <h1 class="hero-headline reveal reveal-delay-1" aria-label={hero.headline}>
+        <span class="hl hl-light">Building</span>
+        <span class="hl hl-heavy">what's next.</span>
+        <span class="hl hl-light">In content,</span>
+        <span class="hl hl-accent">AI and tech.</span>
       </h1>
 
-      <p class="hero-subhead reveal reveal-delay-2">
-        {hero.subhead}
-      </p>
+      <p class="hero-subhead reveal reveal-delay-2">{hero.subhead}</p>
 
       <div class="hero-ctas reveal reveal-delay-3">
         {hero.ctas.map((cta) => (
-          <a href={cta.href} class={`btn btn-${cta.variant}`}>
+          <a href={cta.href} class={`btn ${cta.variant === 'primary' ? 'btn-primary' : 'btn-ghost'}`}>
             {cta.label}
           </a>
         ))}
       </div>
-
     </div>
 
+    <!-- Soundbite card — anchored to bottom of hero -->
     <blockquote class="hero-soundbite reveal reveal-delay-4" aria-label="Featured quote">
       <span class="soundbite-mark" aria-hidden="true">&ldquo;</span>
       <p class="soundbite-text">{hero.featuredQuote}</p>
     </blockquote>
 
   </div>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue reveal reveal-delay-4" aria-hidden="true">
+    <span class="scroll-label">Scroll</span>
+    <span class="scroll-line"></span>
+  </div>
 </section>
 
 <style>
+  /* ── Section ─────────────────────────────────────────────────── */
   .hero {
+    background: var(--color-dark-bg);
+    min-height: 100svh;
     padding-top: var(--sp-16);
     padding-bottom: var(--sp-20);
-    min-height: 90svh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle radial glow behind headline */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -20%;
+    width: 80%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(45,74,58,0.18) 0%, transparent 65%);
+    pointer-events: none;
   }
 
   @media (min-width: 768px) {
     .hero {
       padding-top: var(--sp-20);
       padding-bottom: var(--sp-24);
-      min-height: 88vh;
     }
   }
 
-  /* ── Content ─────────────────────────────────────────────────── */
-  .hero-content {
-    max-width: 840px;
-  }
-
+  /* ── Eyebrow ─────────────────────────────────────────────────── */
   .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--sp-2);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent);
     margin-bottom: var(--sp-5);
   }
 
-  .hero-eyebrow::before {
-    content: '';
+  /* Script / calligraphy treatment for "Champion of Joy" */
+  .eyebrow-script {
     display: inline-block;
-    width: 24px;
-    height: 2px;
-    background: currentColor;
-    flex-shrink: 0;
-  }
-
-  .hero-headline {
-    font-size: clamp(2.5rem, 7vw, 5.25rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    color: var(--color-text);
-    margin-bottom: var(--sp-6);
-  }
-
-  .hero-subhead {
-    font-size: clamp(1.0625rem, 2vw, 1.25rem);
+    font-family: var(--font-script);
+    font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 400;
-    color: var(--color-text-muted);
-    max-width: 560px;
-    line-height: 1.65;
-    margin-bottom: var(--sp-8);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-accent-mid);
+    line-height: 1.3;
   }
 
+  /* ── Headline ────────────────────────────────────────────────── */
+  .hero-headline {
+    font-size: clamp(3rem, 9vw, 7rem);
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    color: #fff;
+    margin-bottom: var(--sp-8);
+    max-width: 900px;
+  }
+
+  /* ── Subhead ─────────────────────────────────────────────────── */
+  .hero-subhead {
+    font-size: clamp(1rem, 1.5vw, 1.1875rem);
+    color: var(--color-dark-muted);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: var(--sp-10);
+  }
+
+  /* ── CTAs ────────────────────────────────────────────────────── */
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
     gap: var(--sp-3);
-    align-items: center;
   }
 
-  /* ── Soundbite ───────────────────────────────────────────────── */
+  /* ── Soundbite card ──────────────────────────────────────────── */
   .hero-soundbite {
     margin-top: var(--sp-16);
-    padding: var(--sp-8) var(--sp-8);
-    background: var(--color-surface);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    max-width: 640px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-soundbite::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 4px;
-    background: var(--color-accent);
-    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    padding: var(--sp-7) var(--sp-8);
+    background: var(--color-dark-card);
+    border: 1px solid var(--color-dark-border);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
   }
 
   @media (min-width: 768px) {
-    .hero-soundbite {
-      padding: var(--sp-10) var(--sp-12);
-    }
+    .hero-soundbite { padding: var(--sp-8) var(--sp-10); }
   }
 
   .soundbite-mark {
-    display: block;
     font-family: var(--font-serif);
-    font-size: 4rem;
-    line-height: 0.6;
+    font-size: 3rem;
+    line-height: 0.5;
     color: var(--color-accent);
-    margin-bottom: var(--sp-3);
+    display: block;
     user-select: none;
   }
 
   .soundbite-text {
     font-family: var(--font-serif);
-    font-size: clamp(1.1875rem, 2.5vw, 1.5rem);
     font-style: italic;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
     line-height: 1.45;
-    color: var(--color-text);
+    color: rgba(255,255,255,0.88);
+  }
+
+  /* ── Scroll cue ──────────────────────────────────────────────── */
+  .scroll-cue {
+    position: absolute;
+    bottom: var(--sp-8);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  @media (max-width: 639px) { .scroll-cue { display: none; } }
+
+  .scroll-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+  }
+
+  .scroll-line {
+    display: block;
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.15); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-line { animation: none; }
   }
 </style>

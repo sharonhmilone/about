@@ -7,29 +7,32 @@ import { whatIBuild } from '../data/content.js';
 
     <header class="section-header reveal">
       <p class="section-eyebrow">Work</p>
-      <h2 class="section-heading" id="work-heading">{whatIBuild.heading}</h2>
+      <h2 class="section-heading" id="work-heading">
+        <span class="hl hl-light">What I</span>
+        <span class="hl hl-heavy">Build.</span>
+      </h2>
       <p class="section-subhead">{whatIBuild.subhead}</p>
     </header>
 
     <div class="pillars">
       {whatIBuild.pillars.map((pillar, i) => (
         <article
-          class={`pillar reveal reveal-delay-${i + 1} ${pillar.accent ? 'pillar--accent' : ''}`}
+          class={`pillar reveal reveal-delay-${i + 1}`}
           aria-labelledby={`pillar-${i}`}
         >
-          <div class="pillar-inner">
+          <div class="pillar-top">
             <span class="pillar-num" aria-hidden="true">0{i + 1}</span>
             <h3 class="pillar-label" id={`pillar-${i}`}>{pillar.label}</h3>
             <p class="pillar-desc">{pillar.description}</p>
-            <ul class="pillar-examples" aria-label={`${pillar.label} examples`}>
-              {pillar.examples.map((ex) => (
-                <li class="pillar-example">
-                  <span class="example-dot" aria-hidden="true"></span>
-                  <span>{ex}</span>
-                </li>
-              ))}
-            </ul>
           </div>
+          <ul class="pillar-examples" aria-label={`${pillar.label} examples`}>
+            {pillar.examples.map((ex) => (
+              <li class="example-item">
+                <span class="example-dot" aria-hidden="true"></span>
+                <span>{ex}</span>
+              </li>
+            ))}
+          </ul>
         </article>
       ))}
     </div>
@@ -43,11 +46,9 @@ import { whatIBuild } from '../data/content.js';
     border-top: 1px solid var(--color-border);
   }
 
-  .section-header {
-    margin-bottom: var(--sp-12);
-  }
+  .section-header { margin-bottom: var(--sp-12); }
 
-  /* ── Pillars layout ──────────────────────────────────────────── */
+  /* ── Pillars grid ────────────────────────────────────────────── */
   .pillars {
     display: grid;
     grid-template-columns: 1fr;
@@ -55,13 +56,13 @@ import { whatIBuild } from '../data/content.js';
   }
 
   @media (min-width: 768px) {
-    .pillars {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .pillars { grid-template-columns: repeat(3, 1fr); }
   }
 
   /* ── Single pillar ───────────────────────────────────────────── */
   .pillar {
+    display: flex;
+    flex-direction: column;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -70,66 +71,68 @@ import { whatIBuild } from '../data/content.js';
   }
 
   .pillar:hover {
-    box-shadow: 0 10px 36px rgba(28, 26, 23, 0.08);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(28,26,23,0.08);
+    transform: translateY(-3px);
   }
 
-  .pillar--accent {
-    border-color: var(--color-accent);
-  }
-
-  .pillar-inner {
+  /* Top block — accent bar on hover */
+  .pillar-top {
     padding: var(--sp-8);
-    height: 100%;
+    border-bottom: 1px solid var(--color-border);
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--sp-4);
-    position: relative;
+    gap: var(--sp-3);
   }
 
-  .pillar--accent .pillar-inner::before {
+  .pillar-top::before {
     content: '';
     position: absolute;
     inset: 0 auto 0 0;
     width: 3px;
     background: var(--color-accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 300ms ease;
+    border-radius: 0 0 0 var(--radius-lg);
   }
 
+  .pillar:hover .pillar-top::before { transform: scaleY(1); }
+
   .pillar-num {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 800;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-accent);
   }
 
   .pillar-label {
-    font-size: 1.25rem;
+    font-size: 1.1875rem;
     font-weight: 800;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     color: var(--color-text);
   }
 
   .pillar-desc {
-    font-size: 0.9375rem;
+    font-size: 0.9rem;
     color: var(--color-text-muted);
     line-height: 1.65;
-    padding-bottom: var(--sp-4);
-    border-bottom: 1px solid var(--color-border);
   }
 
   /* ── Examples ────────────────────────────────────────────────── */
   .pillar-examples {
+    padding: var(--sp-6) var(--sp-8) var(--sp-8);
     display: flex;
     flex-direction: column;
     gap: var(--sp-4);
     flex: 1;
   }
 
-  .pillar-example {
+  .example-item {
     display: grid;
-    grid-template-columns: 10px 1fr;
+    grid-template-columns: 8px 1fr;
     gap: var(--sp-3);
     align-items: start;
     font-size: 0.875rem;
@@ -139,11 +142,11 @@ import { whatIBuild } from '../data/content.js';
 
   .example-dot {
     display: block;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--color-accent);
-    margin-top: 0.45em;
+    margin-top: 0.52em;
     flex-shrink: 0;
   }
 </style>

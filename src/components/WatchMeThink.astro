@@ -6,30 +6,33 @@ import { watchMeThink } from '../data/content.js';
   <div class="container">
 
     <header class="section-header reveal">
-      <p class="section-eyebrow">Video</p>
-      <h2 class="section-heading" id="watch-heading">{watchMeThink.heading}</h2>
-      <p class="section-subhead">{watchMeThink.subhead}</p>
+      <p class="section-eyebrow eyebrow-dark">Video</p>
+      <h2 class="section-heading" id="watch-heading" style="color:#fff;">
+        <span class="hl hl-light" style="color:rgba(255,255,255,0.5)">Watch Me</span>
+        <span class="hl hl-heavy" style="color:#fff">Think.</span>
+      </h2>
+      <p class="section-subhead section-subhead--light">{watchMeThink.subhead}</p>
     </header>
 
     <!-- Featured video -->
     <a
       href={watchMeThink.featured.href}
-      class="featured-video reveal"
+      class="featured-video reveal reveal-delay-1"
       aria-label={`Watch: ${watchMeThink.featured.title}`}
     >
       <div class="featured-thumb" aria-hidden="true">
-        <div class="play-btn">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1.5" fill="none" />
-            <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="white" />
+        <span class="video-tag">{watchMeThink.featured.tag}</span>
+        <div class="play-btn" aria-hidden="true">
+          <!-- Play icon -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M8 5.5L19 12L8 18.5V5.5Z" fill="white"/>
           </svg>
         </div>
-        <span class="featured-tag">{watchMeThink.featured.tag}</span>
       </div>
-      <div class="featured-info">
-        <h3 class="video-title">{watchMeThink.featured.title}</h3>
-        <p class="video-context">{watchMeThink.featured.context}</p>
-        <span class="watch-link">Watch <span aria-hidden="true">&rarr;</span></span>
+      <div class="featured-meta">
+        <h3 class="featured-title">{watchMeThink.featured.title}</h3>
+        <p class="featured-context">{watchMeThink.featured.context}</p>
+        <span class="watch-cta">Watch now &rarr;</span>
       </div>
     </a>
 
@@ -42,15 +45,14 @@ import { watchMeThink } from '../data/content.js';
           role="listitem"
           aria-label={`Watch: ${v.title}`}
         >
-          <div class="video-thumb" aria-hidden="true">
-            <div class="play-btn play-btn-sm">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1.5" fill="none" />
-                <path d="M10 8.5L16 12L10 15.5V8.5Z" fill="white" />
+          <div class="card-thumb" aria-hidden="true">
+            <div class="play-btn-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M8 5.5L19 12L8 18.5V5.5Z" fill="white"/>
               </svg>
             </div>
           </div>
-          <div class="card-info">
+          <div class="card-meta">
             <span class="card-tag">{v.tag}</span>
             <h3 class="card-title">{v.title}</h3>
             <p class="card-context">{v.context}</p>
@@ -64,27 +66,27 @@ import { watchMeThink } from '../data/content.js';
 
 <style>
   .watch-me-think {
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
+    background: var(--color-dark-bg);
+    border-top: 1px solid var(--color-dark-border);
   }
 
-  .section-header {
-    margin-bottom: var(--sp-10);
-  }
+  .section-header { margin-bottom: var(--sp-10); }
 
   /* ── Featured video ──────────────────────────────────────────── */
   .featured-video {
-    display: block;
+    display: grid;
+    grid-template-columns: 1fr;
+    background: var(--color-dark-card);
+    border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
     margin-bottom: var(--sp-8);
-    transition: box-shadow var(--ease), transform var(--ease);
+    transition: box-shadow var(--ease), transform var(--ease), border-color var(--ease);
   }
 
   .featured-video:hover {
-    box-shadow: 0 12px 40px rgba(28, 26, 23, 0.1);
+    border-color: var(--color-accent);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
     transform: translateY(-3px);
   }
 
@@ -94,15 +96,12 @@ import { watchMeThink } from '../data/content.js';
   }
 
   @media (min-width: 768px) {
-    .featured-video {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
+    .featured-video { grid-template-columns: 3fr 2fr; }
   }
 
   .featured-thumb {
     aspect-ratio: 16 / 9;
-    background: linear-gradient(135deg, #1C1A17 0%, #2d2a24 100%);
+    background: linear-gradient(135deg, #0f0e0a 0%, #1e1c14 60%, #2a2820 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,69 +110,33 @@ import { watchMeThink } from '../data/content.js';
   }
 
   @media (min-width: 768px) {
-    .featured-thumb {
-      aspect-ratio: auto;
-      min-height: 320px;
-    }
+    .featured-thumb { aspect-ratio: auto; min-height: 300px; }
   }
 
-  .featured-tag {
+  .video-tag {
     position: absolute;
     top: var(--sp-4);
     left: var(--sp-4);
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: #fff;
     background: var(--color-accent);
-    padding: 0.25rem 0.625rem;
+    padding: 0.3rem 0.75rem;
     border-radius: var(--radius-pill);
   }
 
-  .featured-info {
-    padding: var(--sp-8);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--sp-3);
-  }
-
-  @media (min-width: 768px) {
-    .featured-info { padding: var(--sp-10) var(--sp-10); }
-  }
-
-  .video-title {
-    font-size: clamp(1.125rem, 2vw, 1.375rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    color: var(--color-text);
-  }
-
-  .video-context {
-    font-size: 0.9375rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-  }
-
-  .watch-link {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    margin-top: var(--sp-2);
-  }
-
-  /* ── Play button ─────────────────────────────────────────────── */
   .play-btn {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 50%;
-    backdrop-filter: blur(4px);
+    padding-left: 3px; /* optical center for play icon */
     transition: background var(--ease), transform var(--ease);
   }
 
@@ -182,39 +145,60 @@ import { watchMeThink } from '../data/content.js';
     transform: scale(1.08);
   }
 
-  .play-btn-sm {
-    width: 44px;
-    height: 44px;
+  .featured-meta {
+    padding: var(--sp-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--sp-4);
+  }
+
+  @media (min-width: 768px) { .featured-meta { padding: var(--sp-10); } }
+
+  .featured-title {
+    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    color: #fff;
+  }
+
+  .featured-context {
+    font-size: 0.9375rem;
+    color: var(--color-dark-muted);
+    line-height: 1.6;
+  }
+
+  .watch-cta {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-accent);
   }
 
   /* ── Video grid ──────────────────────────────────────────────── */
   .video-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--sp-5);
+    gap: var(--sp-4);
   }
 
-  @media (min-width: 640px) {
-    .video-grid { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (min-width: 1024px) {
-    .video-grid { grid-template-columns: repeat(4, 1fr); }
-  }
+  @media (min-width: 540px) { .video-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1024px) { .video-grid { grid-template-columns: repeat(4, 1fr); } }
 
   .video-card {
+    background: var(--color-dark-card);
+    border: 1px solid var(--color-dark-border);
     border-radius: var(--radius-md);
     overflow: hidden;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
-    transition: box-shadow var(--ease), transform var(--ease);
+    transition: border-color var(--ease), transform var(--ease), box-shadow var(--ease);
   }
 
   .video-card:hover {
-    box-shadow: 0 8px 28px rgba(28, 26, 23, 0.09);
+    border-color: rgba(255,255,255,0.2);
     transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
   }
 
   .video-card:focus-visible {
@@ -222,19 +206,30 @@ import { watchMeThink } from '../data/content.js';
     outline-offset: 3px;
   }
 
-  .video-thumb {
+  .card-thumb {
     aspect-ratio: 16 / 9;
-    background: linear-gradient(135deg, #28251f 0%, #383229 100%);
+    background: linear-gradient(135deg, #0f0e0a 0%, #1e1b12 100%);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .video-card:hover .play-btn-sm {
-    background: var(--color-accent);
+  .play-btn-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 2px;
+    transition: background var(--ease);
   }
 
-  .card-info {
+  .video-card:hover .play-btn-sm { background: var(--color-accent); }
+
+  .card-meta {
     padding: var(--sp-5);
     display: flex;
     flex-direction: column;
@@ -243,9 +238,9 @@ import { watchMeThink } from '../data/content.js';
   }
 
   .card-tag {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-accent);
   }
@@ -255,12 +250,12 @@ import { watchMeThink } from '../data/content.js';
     font-weight: 700;
     letter-spacing: -0.015em;
     line-height: 1.35;
-    color: var(--color-text);
+    color: #fff;
   }
 
   .card-context {
     font-size: 0.8125rem;
-    color: var(--color-text-muted);
+    color: var(--color-dark-muted);
     line-height: 1.6;
   }
 </style>

@@ -6,16 +6,19 @@ import { whatToExpect } from '../data/content.js';
   <div class="container">
 
     <header class="section-header reveal">
-      <p class="section-eyebrow">For hiring managers</p>
-      <h2 class="section-heading" id="expect-heading">{whatToExpect.heading}</h2>
-      <p class="section-subhead">{whatToExpect.subhead}</p>
+      <p class="section-eyebrow eyebrow-dark">For hiring managers</p>
+      <h2 class="section-heading" id="expect-heading" style="color:#fff;">
+        <span class="hl hl-light" style="color:rgba(255,255,255,0.45)">What to</span>
+        <span class="hl hl-heavy" style="color:#fff;">Expect.</span>
+      </h2>
+      <p class="section-subhead section-subhead--light">{whatToExpect.subhead}</p>
     </header>
 
     <ul class="traits" aria-label="Working traits">
       {whatToExpect.traits.map((trait, i) => (
-        <li class={`trait reveal reveal-delay-${(i % 4) + 1}`}>
-          <span class="trait-check" aria-hidden="true">✓</span>
-          <div class="trait-content">
+        <li class={`trait reveal reveal-delay-${(i % 3) + 1}`}>
+          <span class="trait-index" aria-hidden="true">0{i + 1}</span>
+          <div class="trait-body">
             <strong class="trait-label">{trait.label}</strong>
             <span class="trait-desc">{trait.description}</span>
           </div>
@@ -28,61 +31,53 @@ import { whatToExpect } from '../data/content.js';
 
 <style>
   .what-to-expect {
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
+    background: var(--color-dark-bg);
+    border-top: 1px solid var(--color-dark-border);
   }
 
-  .section-header {
-    margin-bottom: var(--sp-10);
-  }
+  .section-header { margin-bottom: var(--sp-12); }
 
-  /* ── Traits list ─────────────────────────────────────────────── */
+  /* ── Traits ──────────────────────────────────────────────────── */
   .traits {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0;
   }
 
-  @media (min-width: 768px) {
-    .traits {
-      grid-template-columns: 1fr 1fr;
-    }
+  @media (min-width: 640px) {
+    .traits { grid-template-columns: 1fr 1fr; }
   }
 
   .trait {
     display: flex;
     align-items: flex-start;
-    gap: var(--sp-5);
-    padding: var(--sp-6) 0;
-    border-bottom: 1px solid var(--color-border);
+    gap: var(--sp-6);
+    padding: var(--sp-7) 0;
+    border-bottom: 1px solid var(--color-dark-border);
+    transition: border-color var(--ease);
   }
 
-  .trait:last-child {
-    border-bottom: none;
+  .trait:hover { border-color: rgba(255,255,255,0.15); }
+
+  @media (min-width: 640px) {
+    .trait:nth-last-child(-n+2) { border-bottom: none; }
   }
 
-  @media (min-width: 768px) {
-    .trait:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
+  @media (max-width: 639px) {
+    .trait:last-child { border-bottom: none; }
   }
 
-  .trait-check {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-accent-subtle);
-    color: var(--color-accent);
-    border-radius: 50%;
-    font-size: 0.875rem;
+  .trait-index {
+    font-size: 0.625rem;
     font-weight: 800;
-    flex-shrink: 0;
-    margin-top: 2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    min-width: 28px;
+    padding-top: 3px;
   }
 
-  .trait-content {
+  .trait-body {
     display: flex;
     flex-direction: column;
     gap: var(--sp-1);
@@ -92,12 +87,13 @@ import { whatToExpect } from '../data/content.js';
     font-size: 1.0625rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--color-text);
+    color: #fff;
+    display: block;
   }
 
   .trait-desc {
     font-size: 0.9375rem;
-    color: var(--color-text-muted);
+    color: var(--color-dark-muted);
     line-height: 1.6;
   }
 </style>

@@ -21,25 +21,26 @@ const base = import.meta.env.BASE_URL;
     <meta name="description" content={description} />
     <meta name="author" content="Sharon Milone" />
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Sharon Milone" />
 
-    <!-- Fonts -->
+    <!-- Fonts: preconnect first, then stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=DM+Serif+Display:ital@0;1&family=Great+Vibes&display=swap"
       rel="stylesheet"
     />
   </head>
 
   <body>
+    <!-- Global grain texture overlay -->
+    <div class="grain-layer" aria-hidden="true"></div>
+
     <slot />
 
     <script>
@@ -53,23 +54,19 @@ const base = import.meta.env.BASE_URL;
             }
           });
         },
-        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
       );
 
       document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
-      // ── Header: frosted glass on scroll ───────────────────────────────────
+      // ── Header frosted glass on scroll ────────────────────────────────────
       const header = document.querySelector('.site-header') as HTMLElement | null;
 
       window.addEventListener(
         'scroll',
         () => {
           if (!header) return;
-          if (window.scrollY > 64) {
-            header.classList.add('scrolled');
-          } else {
-            header.classList.remove('scrolled');
-          }
+          header.classList.toggle('scrolled', window.scrollY > 60);
         },
         { passive: true }
       );

@@ -5,9 +5,10 @@ import { proofStrip } from '../data/content.js';
 <section class="proof-strip" aria-label="Credentials and working style">
   <div class="container">
 
+    <p class="strip-label reveal">{proofStrip.label}</p>
+
     <!-- Logo row -->
-    <p class="strip-label">{proofStrip.label}</p>
-    <div class="logo-track h-scroll" role="list" aria-label="Organizations worked with">
+    <div class="logo-track h-scroll reveal reveal-delay-1" role="list" aria-label="Organizations worked with">
       {proofStrip.logos.map((logo) => (
         <div class="logo-item" role="listitem">
           <span class="logo-text">{logo.name}</span>
@@ -15,13 +16,13 @@ import { proofStrip } from '../data/content.js';
       ))}
     </div>
 
-    <div class="strip-divider" role="separator" aria-hidden="true"></div>
+    <div class="strip-rule reveal reveal-delay-2" role="separator" aria-hidden="true"></div>
 
     <!-- Chips -->
-    <p class="chip-label">How I work</p>
-    <div class="chip-track h-scroll" role="list" aria-label="Working style">
-      {proofStrip.chips.map((chip) => (
-        <span class="chip" role="listitem">{chip}</span>
+    <p class="chip-label reveal reveal-delay-2">How I work</p>
+    <div class="chip-track h-scroll reveal reveal-delay-3" role="list" aria-label="Working style">
+      {proofStrip.chips.map((chip, i) => (
+        <span class={`chip ${i === 0 ? 'chip--active' : ''}`} role="listitem">{chip}</span>
       ))}
     </div>
 
@@ -30,34 +31,30 @@ import { proofStrip } from '../data/content.js';
 
 <style>
   .proof-strip {
-    background: var(--color-surface);
+    background: var(--color-bg);
     padding-block: var(--sp-12);
-    border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
   }
 
   /* ── Labels ──────────────────────────────────────────────────── */
   .strip-label,
   .chip-label {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-text-muted);
     margin-bottom: var(--sp-4);
   }
 
-  .chip-label {
-    margin-top: 0;
-  }
+  .chip-label { margin-top: 0; }
 
   /* ── Logo track ──────────────────────────────────────────────── */
   .logo-track {
-    /* Bleed to screen edges on mobile */
     margin-inline: calc(-1 * var(--sp-6));
     padding-inline: var(--sp-6);
-    padding-bottom: var(--sp-4);
-    gap: var(--sp-2);
+    margin-bottom: 0;
+    gap: var(--sp-3);
   }
 
   @media (min-width: 768px) {
@@ -73,18 +70,18 @@ import { proofStrip } from '../data/content.js';
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--sp-3) var(--sp-6);
+    height: 48px;
+    padding-inline: var(--sp-6);
     border: 1.5px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: var(--color-bg);
-    min-width: 140px;
-    height: 52px;
-    transition: border-color var(--ease), background var(--ease);
+    background: var(--color-surface);
+    min-width: 130px;
+    transition: border-color var(--ease), box-shadow var(--ease);
   }
 
   .logo-item:hover {
-    border-color: var(--color-text-muted);
-    background: var(--color-surface);
+    border-color: var(--color-accent);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   }
 
   .logo-text {
@@ -95,8 +92,8 @@ import { proofStrip } from '../data/content.js';
     white-space: nowrap;
   }
 
-  /* ── Divider ─────────────────────────────────────────────────── */
-  .strip-divider {
+  /* ── Rule ────────────────────────────────────────────────────── */
+  .strip-rule {
     height: 1px;
     background: var(--color-border);
     margin-block: var(--sp-8);
@@ -121,19 +118,19 @@ import { proofStrip } from '../data/content.js';
   .chip {
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem 1.0625rem;
+    padding: 0.5rem 1rem;
     border-radius: var(--radius-pill);
     border: 1.5px solid var(--color-border);
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--color-text);
-    background: var(--color-bg);
+    background: var(--color-surface);
     white-space: nowrap;
     transition: border-color var(--ease), background var(--ease), color var(--ease);
   }
 
-  .chip:nth-child(odd):hover,
-  .chip:nth-child(even):hover {
+  .chip:hover,
+  .chip--active {
     background: var(--color-accent-subtle);
     border-color: var(--color-accent);
     color: var(--color-accent);

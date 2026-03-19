@@ -1,11 +1,10 @@
 ---
-// Header: minimal sticky bar. Wordmark left, single CTA right.
+// Header: starts transparent over dark hero, frosts on scroll
 ---
 
 <header class="site-header">
   <div class="container header-inner">
     <a href="#" class="wordmark" aria-label="Sharon Milone — home">Sharon</a>
-
     <nav aria-label="Primary navigation">
       <a href="#contact" class="header-cta">Get in touch</a>
     </nav>
@@ -17,18 +16,17 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    padding-block: var(--sp-4);
-    transition:
-      background 300ms ease,
-      box-shadow 300ms ease,
-      backdrop-filter 300ms ease;
+    padding-block: var(--sp-5);
+    /* Starts transparent — hero is dark so this blends in */
+    background: transparent;
+    transition: background 300ms ease, box-shadow 300ms ease;
   }
 
   .site-header.scrolled {
-    background: rgba(248, 245, 240, 0.88);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 1px 0 var(--color-border);
+    background: rgba(24, 22, 15, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .header-inner {
@@ -38,33 +36,29 @@
   }
 
   .wordmark {
-    font-size: 1.1875rem;
+    font-size: 1.125rem;
     font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--color-text);
+    letter-spacing: -0.04em;
+    color: #fff;
     transition: color var(--ease);
   }
 
-  .wordmark:hover {
-    color: var(--color-accent);
-  }
+  .wordmark:hover { color: var(--color-accent); }
 
   .header-cta {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 700;
-    color: var(--color-accent);
-    border: 1.5px solid currentColor;
-    padding: 0.4375rem 1rem;
+    letter-spacing: 0.01em;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    padding: 0.4375rem 1.0625rem;
     border-radius: var(--radius-pill);
-    letter-spacing: -0.01em;
-    transition:
-      background var(--ease),
-      color var(--ease);
+    transition: background var(--ease), border-color var(--ease);
   }
 
   .header-cta:hover {
     background: var(--color-accent);
-    color: #fff;
+    border-color: var(--color-accent);
   }
 
   .header-cta:focus-visible {
