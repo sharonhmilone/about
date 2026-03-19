@@ -2,53 +2,57 @@
 import { watchMeThink } from '../data/content.js';
 ---
 
-<section class="section watch-me-think" id="watch" aria-labelledby="watch-heading">
+<section class="section watch" id="watch" aria-labelledby="watch-h">
   <div class="container">
 
-    <header class="section-header reveal">
-      <p class="section-eyebrow eyebrow-dark">Video</p>
-      <h2 class="section-heading" id="watch-heading" style="color:#fff;">
-        <span class="hl hl-light" style="color:rgba(255,255,255,0.5)">Watch Me</span>
+    <header class="watch-header reveal">
+      <p class="eyebrow eyebrow-light">{watchMeThink.eyebrow}</p>
+      <h2 class="s-heading" id="watch-h" style="color:#fff">
+        <span class="hl hl-thin" style="color:rgba(255,255,255,0.4)">Watch Me</span>
         <span class="hl hl-heavy" style="color:#fff">Think.</span>
       </h2>
-      <p class="section-subhead section-subhead--light">{watchMeThink.subhead}</p>
+      <p class="s-sub s-sub--light">{watchMeThink.subhead}</p>
     </header>
 
     <!-- Featured video -->
     <a
       href={watchMeThink.featured.href}
-      class="featured-video reveal reveal-delay-1"
+      class="featured-card reveal d1"
       aria-label={`Watch: ${watchMeThink.featured.title}`}
     >
-      <div class="featured-thumb" aria-hidden="true">
-        <span class="video-tag">{watchMeThink.featured.tag}</span>
-        <div class="play-btn" aria-hidden="true">
-          <!-- Play icon -->
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M8 5.5L19 12L8 18.5V5.5Z" fill="white"/>
+      <div class="feat-thumb" aria-hidden="true">
+        <span class="video-tag tag tag-dark">{watchMeThink.featured.tag}</span>
+        <div class="play-ring">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+            <path d="M8 5.5L19 12L8 18.5z"/>
           </svg>
         </div>
       </div>
-      <div class="featured-meta">
-        <h3 class="featured-title">{watchMeThink.featured.title}</h3>
-        <p class="featured-context">{watchMeThink.featured.context}</p>
-        <span class="watch-cta">Watch now &rarr;</span>
+      <div class="feat-meta">
+        <h3 class="feat-title">{watchMeThink.featured.title}</h3>
+        <p class="feat-context">{watchMeThink.featured.context}</p>
+        <span class="feat-cta" aria-hidden="true">Watch now &rarr;</span>
       </div>
     </a>
 
-    <!-- Video grid -->
-    <div class="video-grid" role="list" aria-label="More videos">
+    <!--
+      Secondary videos:
+      Mobile  → horizontal snap-scroll shelf (partial next card visible)
+      Tablet+ → 2-col grid
+      Desktop → rendered as right column via CSS Grid on featured-card row
+    -->
+    <div class="video-shelf" role="list" aria-label="More videos">
       {watchMeThink.videos.map((v, i) => (
         <a
           href={v.href}
-          class={`video-card reveal reveal-delay-${(i % 4) + 1}`}
+          class={`video-card reveal d${(i % 3) + 2}`}
           role="listitem"
           aria-label={`Watch: ${v.title}`}
         >
           <div class="card-thumb" aria-hidden="true">
-            <div class="play-btn-sm">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M8 5.5L19 12L8 18.5V5.5Z" fill="white"/>
+            <div class="play-ring play-ring--sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                <path d="M8 5.5L19 12L8 18.5z"/>
               </svg>
             </div>
           </div>
@@ -65,197 +69,269 @@ import { watchMeThink } from '../data/content.js';
 </section>
 
 <style>
-  .watch-me-think {
-    background: var(--color-dark-bg);
-    border-top: 1px solid var(--color-dark-border);
+/* ── Section ─────────────────────────────────────────────── */
+.watch {
+  background: var(--dark);
+  border-top: 1px solid var(--dark-border);
+}
+
+.watch-header { margin-bottom: var(--sp-10); }
+
+/* ─────────────────────────────────────────────────────────
+   FEATURED CARD
+   Mobile:  stacked (thumb on top, meta below)
+   Tablet (640px+): side-by-side (thumb left, meta right)
+   Desktop (1024px+): featured takes left 60%, secondary shelf right 40%
+   The desktop shelf layout is handled by wrapping both in a grid.
+───────────────────────────────────────────────────────── */
+
+/* On desktop, arrange featured + shelf side by side */
+@media (min-width: 1024px) {
+  .watch > .container > .featured-card,
+  .watch > .container > .video-shelf {
+    /* Reset so they lay inside a grid */
   }
 
-  .section-header { margin-bottom: var(--sp-10); }
-
-  /* ── Featured video ──────────────────────────────────────────── */
-  .featured-video {
+  /* Create a 2-col grid from featured-card + video-shelf */
+  .watch .container {
     display: grid;
-    grid-template-columns: 1fr;
-    background: var(--color-dark-card);
-    border: 1px solid var(--color-dark-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    margin-bottom: var(--sp-8);
-    transition: box-shadow var(--ease), transform var(--ease), border-color var(--ease);
+    grid-template-columns: 1fr; /* default single-col header */
   }
 
-  .featured-video:hover {
-    border-color: var(--color-accent);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-    transform: translateY(-3px);
+  .watch-header { grid-column: 1; }
+
+  .featured-card {
+    grid-column: 1;
   }
 
-  .featured-video:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
+  .video-shelf {
+    grid-column: 1;
   }
+}
 
-  @media (min-width: 768px) {
-    .featured-video { grid-template-columns: 3fr 2fr; }
+/* Simpler approach: wrap featured + shelf in a media-row div via container */
+
+.featured-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: var(--sp-6);
+  transition: border-color var(--t), transform var(--t), box-shadow var(--t);
+}
+
+.featured-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.featured-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .featured-card {
+    grid-template-columns: 3fr 2fr;
   }
+}
 
-  .featured-thumb {
-    aspect-ratio: 16 / 9;
-    background: linear-gradient(135deg, #0f0e0a 0%, #1e1c14 60%, #2a2820 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    min-height: 220px;
+.feat-thumb {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(145deg, #0f0d09 0%, #1c1710 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 200px;
+}
+
+@media (min-width: 640px) {
+  .feat-thumb {
+    aspect-ratio: auto;
+    min-height: 280px;
   }
+}
 
-  @media (min-width: 768px) {
-    .featured-thumb { aspect-ratio: auto; min-height: 300px; }
-  }
+.video-tag {
+  position: absolute;
+  top: var(--sp-4);
+  left: var(--sp-4);
+}
 
-  .video-tag {
-    position: absolute;
-    top: var(--sp-4);
-    left: var(--sp-4);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #fff;
-    background: var(--color-accent);
-    padding: 0.3rem 0.75rem;
-    border-radius: var(--radius-pill);
-  }
+/* Play button ring */
+.play-ring {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 3px; /* optical center */
+  transition: background var(--t), border-color var(--t), transform var(--t);
+}
 
-  .play-btn {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 3px; /* optical center for play icon */
-    transition: background var(--ease), transform var(--ease);
-  }
+.featured-card:hover .play-ring {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.06);
+}
 
-  .featured-video:hover .play-btn {
-    background: var(--color-accent);
-    transform: scale(1.08);
-  }
+.play-ring--sm {
+  width: 40px;
+  height: 40px;
+  padding-left: 2px;
+}
 
-  .featured-meta {
-    padding: var(--sp-8);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.feat-meta {
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sp-4);
+}
+
+@media (min-width: 640px) {
+  .feat-meta { padding: var(--sp-10); }
+}
+
+.feat-title {
+  font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.feat-context {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--dark-muted);
+}
+
+.feat-cta {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ─────────────────────────────────────────────────────────
+   VIDEO SHELF
+   Mobile:  horizontal snap-scroll, partial next card visible
+   Tablet (640px+): 2-column grid
+   Desktop (1024px+): 4-column grid
+───────────────────────────────────────────────────────── */
+.video-shelf {
+  /* Mobile: horizontal scroll */
+  display: flex;
+  gap: var(--sp-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Bleed to edges to show partial next card */
+  margin-inline: calc(-1 * var(--sp-6));
+  padding-inline: var(--sp-6);
+  /* Peek at next card */
+  padding-right: calc(var(--sp-6) + 40px);
+  padding-bottom: var(--sp-2);
+}
+
+.video-shelf::-webkit-scrollbar { display: none; }
+
+.video-card {
+  /* Mobile: fixed-width cards in scroll */
+  flex-shrink: 0;
+  width: 260px;
+  scroll-snap-align: start;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--t), transform var(--t);
+}
+
+.video-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.video-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  /* Switch from scroll to grid on tablet */
+  .video-shelf {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow-x: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+    padding-right: 0;
     gap: var(--sp-4);
   }
-
-  @media (min-width: 768px) { .featured-meta { padding: var(--sp-10); } }
-
-  .featured-title {
-    font-size: clamp(1.125rem, 1.8vw, 1.375rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.3;
-    color: #fff;
-  }
-
-  .featured-context {
-    font-size: 0.9375rem;
-    color: var(--color-dark-muted);
-    line-height: 1.6;
-  }
-
-  .watch-cta {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--color-accent);
-  }
-
-  /* ── Video grid ──────────────────────────────────────────────── */
-  .video-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--sp-4);
-  }
-
-  @media (min-width: 540px) { .video-grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1024px) { .video-grid { grid-template-columns: repeat(4, 1fr); } }
 
   .video-card {
-    background: var(--color-dark-card);
-    border: 1px solid var(--color-dark-border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: border-color var(--ease), transform var(--ease), box-shadow var(--ease);
+    width: auto;
+    flex-shrink: 1;
   }
+}
 
-  .video-card:hover {
-    border-color: rgba(255,255,255,0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+@media (min-width: 1024px) {
+  .video-shelf {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  .video-card:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-  }
+.card-thumb {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(145deg, #120f09 0%, #1a1610 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .card-thumb {
-    aspect-ratio: 16 / 9;
-    background: linear-gradient(135deg, #0f0e0a 0%, #1e1b12 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.video-card:hover .play-ring--sm {
+  background: var(--accent);
+  border-color: var(--accent);
+}
 
-  .play-btn-sm {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 2px;
-    transition: background var(--ease);
-  }
+.card-meta {
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  flex: 1;
+}
 
-  .video-card:hover .play-btn-sm { background: var(--color-accent); }
+.card-tag {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
 
-  .card-meta {
-    padding: var(--sp-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-2);
-    flex: 1;
-  }
+.card-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: #fff;
+}
 
-  .card-tag {
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-
-  .card-title {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    line-height: 1.35;
-    color: #fff;
-  }
-
-  .card-context {
-    font-size: 0.8125rem;
-    color: var(--color-dark-muted);
-    line-height: 1.6;
-  }
+.card-context {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--dark-muted);
+}
 </style>

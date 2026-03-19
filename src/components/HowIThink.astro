@@ -2,148 +2,176 @@
 import { howIThink } from '../data/content.js';
 ---
 
-<section class="section how-i-think" id="thinking" aria-labelledby="thinking-heading">
+<section class="section how-i-think" id="thinking" aria-labelledby="think-h">
   <div class="container">
 
-    <header class="section-header reveal">
-      <p class="section-eyebrow">Approach</p>
-      <h2 class="section-heading" id="thinking-heading">
-        <span class="hl hl-light">How I</span>
+    <header class="think-header reveal">
+      <p class="eyebrow eyebrow-bronze">{howIThink.eyebrow}</p>
+      <h2 class="s-heading" id="think-h">
+        <span class="hl hl-thin">How I</span>
         <span class="hl hl-heavy">Think.</span>
       </h2>
     </header>
 
-    <div class="principles-grid">
+    <!-- Editorial staggered block list -->
+    <ol class="principles" aria-label="Thinking principles">
       {howIThink.principles.map((p, i) => (
-        <article
-          class={`principle reveal reveal-delay-${i + 1}`}
-          aria-labelledby={`principle-${i}`}
+        <li
+          class={`principle reveal d${(i % 4) + 1}`}
+          aria-labelledby={`p-${i}`}
         >
-          <!-- Ghost number watermark -->
-          <span class="ghost-num" aria-hidden="true">{p.number}</span>
-          <div class="principle-inner">
-            <span class="principle-label" aria-hidden="true">{p.number}</span>
-            <h3 class="principle-title" id={`principle-${i}`}>{p.title}</h3>
-            <p class="principle-body">{p.body}</p>
+          <span class="p-num" aria-hidden="true">{p.number}</span>
+          <div class="p-body">
+            <h3 class="p-title" id={`p-${i}`}>{p.title}</h3>
+            <p class="p-text">{p.body}</p>
           </div>
-        </article>
+        </li>
       ))}
-    </div>
+    </ol>
 
-    <blockquote class="pull-quote reveal" aria-label="Sharon Milone on AI">
-      <p class="pull-quote-text">{howIThink.pullQuote}</p>
+    <!-- Pull quote — full-width rhythm break -->
+    <blockquote class="pull-quote reveal" aria-label="Quote on AI">
+      <p class="pq-text">{howIThink.pullQuote}</p>
     </blockquote>
 
   </div>
 </section>
 
 <style>
-  .how-i-think {
-    background: var(--color-surface);
-  }
+/* ── Section ─────────────────────────────────────────────── */
+.how-i-think {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
 
-  .section-header {
-    margin-bottom: var(--sp-12);
-  }
+.think-header { margin-bottom: var(--sp-12); }
 
-  /* ── Principles grid ─────────────────────────────────────────── */
-  .principles-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+/* ─────────────────────────────────────────────────────────
+   PRINCIPLES — mobile: stacked list with rule
+   Tablet+: 2-col
+   Desktop: 2-col staggered (right col offset)
+───────────────────────────────────────────────────────── */
+.principles {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-bottom: var(--sp-16);
+}
+
+@media (min-width: 640px) {
+  .principles {
+    grid-template-columns: 1fr 1fr;
     gap: var(--sp-5);
-    margin-bottom: var(--sp-16);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Stagger: right column pushed down to break the grid rhythm */
+  .principles {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+    align-items: start;
   }
 
-  @media (min-width: 640px) {
-    .principles-grid { grid-template-columns: 1fr 1fr; }
+  /* Even children (02, 04) get a downward push */
+  .principle:nth-child(even) {
+    margin-top: var(--sp-10);
   }
+}
 
-  @media (min-width: 1024px) {
-    .principles-grid { grid-template-columns: repeat(4, 1fr); }
-  }
+/* ── Single principle ────────────────────────────────────── */
+.principle {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: var(--sp-5);
+  align-items: start;
+  padding-block: var(--sp-8);
+  border-top: 1px solid var(--border);
+  position: relative;
+  transition: border-color var(--t);
+}
 
-  /* ── Single principle ────────────────────────────────────────── */
+.principle:last-child { border-bottom: 1px solid var(--border); }
+
+@media (min-width: 640px) {
   .principle {
-    position: relative;
-    overflow: hidden;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition: box-shadow var(--ease), transform var(--ease), border-color var(--ease);
+    grid-template-columns: 1fr;
+    border-top: none;
+    border-bottom: none;
+    padding: var(--sp-8);
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
   }
+
+  .principle:last-child { border-bottom: 1px solid var(--border); }
 
   .principle:hover {
-    box-shadow: 0 10px 36px rgba(28,26,23,0.08);
-    transform: translateY(-3px);
-    border-color: var(--color-accent);
+    border-color: var(--accent);
+    box-shadow: 0 8px 28px rgba(139, 104, 48, 0.08);
   }
+}
 
-  /* Ghost background number */
-  .ghost-num {
-    position: absolute;
-    bottom: -0.2em;
-    right: -0.05em;
-    font-size: 7rem;
+/* ── Number ──────────────────────────────────────────────── */
+.p-num {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+
+@media (min-width: 640px) {
+  .p-num {
+    font-size: 2rem;
     font-weight: 800;
-    letter-spacing: -0.06em;
+    letter-spacing: -0.04em;
+    color: rgba(139, 104, 48, 0.18);
     line-height: 1;
-    color: var(--color-text);
-    opacity: 0.04;
-    user-select: none;
-    pointer-events: none;
-    transition: opacity var(--ease);
+    margin-bottom: var(--sp-3);
   }
+}
 
-  .principle:hover .ghost-num { opacity: 0.06; }
+/* ── Body ────────────────────────────────────────────────── */
+.p-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
 
-  .principle-inner {
-    padding: var(--sp-8);
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-3);
-    position: relative;
-    z-index: 1;
-  }
+.p-title {
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--text);
+}
 
-  .principle-label {
-    font-size: 0.625rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
+.p-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
 
-  .principle-title {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    color: var(--color-text);
-  }
+/* ── Pull quote ──────────────────────────────────────────── */
+.pull-quote {
+  padding-block: var(--sp-10);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
 
-  .principle-body {
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    line-height: 1.65;
-  }
+.pq-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.375rem, 3vw, 2.25rem);
+  line-height: 1.4;
+  color: var(--text);
+  max-width: 660px;
+  margin-inline: auto;
+}
 
-  /* ── Pull quote ──────────────────────────────────────────────── */
-  .pull-quote {
-    text-align: center;
-    padding-block: var(--sp-12);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .pull-quote-text {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-    line-height: 1.35;
-    color: var(--color-text);
-    max-width: 700px;
-    margin-inline: auto;
-  }
-
-  .pull-quote-text::before { content: '\201C'; color: var(--color-accent-mid); }
-  .pull-quote-text::after  { content: '\201D'; color: var(--color-accent-mid); }
+.pq-text::before { content: '\201C'; color: var(--accent); }
+.pq-text::after  { content: '\201D'; color: var(--accent); }
 </style>

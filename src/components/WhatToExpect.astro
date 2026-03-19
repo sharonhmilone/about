@@ -2,25 +2,25 @@
 import { whatToExpect } from '../data/content.js';
 ---
 
-<section class="section what-to-expect" id="expect" aria-labelledby="expect-heading">
+<section class="section expect" id="expect" aria-labelledby="expect-h">
   <div class="container">
 
-    <header class="section-header reveal">
-      <p class="section-eyebrow eyebrow-dark">For hiring managers</p>
-      <h2 class="section-heading" id="expect-heading" style="color:#fff;">
-        <span class="hl hl-light" style="color:rgba(255,255,255,0.45)">What to</span>
-        <span class="hl hl-heavy" style="color:#fff;">Expect.</span>
+    <header class="expect-header reveal">
+      <p class="eyebrow eyebrow-bronze">{whatToExpect.eyebrow}</p>
+      <h2 class="s-heading" id="expect-h">
+        <span class="hl hl-thin">What to</span>
+        <span class="hl hl-heavy">Expect.</span>
       </h2>
-      <p class="section-subhead section-subhead--light">{whatToExpect.subhead}</p>
+      <p class="s-sub">{whatToExpect.subhead}</p>
     </header>
 
     <ul class="traits" aria-label="Working traits">
-      {whatToExpect.traits.map((trait, i) => (
-        <li class={`trait reveal reveal-delay-${(i % 3) + 1}`}>
-          <span class="trait-index" aria-hidden="true">0{i + 1}</span>
+      {whatToExpect.traits.map((t, i) => (
+        <li class={`trait reveal d${(i % 3) + 1}`}>
+          <span class="trait-num" aria-hidden="true">0{i + 1}</span>
           <div class="trait-body">
-            <strong class="trait-label">{trait.label}</strong>
-            <span class="trait-desc">{trait.description}</span>
+            <strong class="trait-label">{t.label}</strong>
+            <span class="trait-desc">{t.description}</span>
           </div>
         </li>
       ))}
@@ -30,70 +30,77 @@ import { whatToExpect } from '../data/content.js';
 </section>
 
 <style>
-  .what-to-expect {
-    background: var(--color-dark-bg);
-    border-top: 1px solid var(--color-dark-border);
-  }
+/* ── Section ─────────────────────────────────────────────── */
+.expect {
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+}
 
-  .section-header { margin-bottom: var(--sp-12); }
+.expect-header { margin-bottom: var(--sp-12); }
 
-  /* ── Traits ──────────────────────────────────────────────────── */
-  .traits {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+/* ─────────────────────────────────────────────────────────
+   TRAITS
+   Mobile:  stacked list
+   Tablet (640px+): 2-column
+───────────────────────────────────────────────────────── */
+.traits {
+  display: grid;
+  grid-template-columns: 1fr;
+}
 
-  @media (min-width: 640px) {
-    .traits { grid-template-columns: 1fr 1fr; }
-  }
+@media (min-width: 640px) {
+  .traits { grid-template-columns: 1fr 1fr; }
+}
 
-  .trait {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--sp-6);
-    padding: var(--sp-7) 0;
-    border-bottom: 1px solid var(--color-dark-border);
-    transition: border-color var(--ease);
-  }
+/* ── Single trait ────────────────────────────────────────── */
+.trait {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-5);
+  padding-block: var(--sp-6);
+  border-bottom: 1px solid var(--border);
+  transition: border-color var(--t);
+}
 
-  .trait:hover { border-color: rgba(255,255,255,0.15); }
+@media (min-width: 640px) {
+  /* Remove bottom border from last row */
+  .trait:nth-last-child(-n+2) { border-bottom: none; }
+}
 
-  @media (min-width: 640px) {
-    .trait:nth-last-child(-n+2) { border-bottom: none; }
-  }
+@media (max-width: 639px) {
+  .trait:last-child { border-bottom: none; }
+}
 
-  @media (max-width: 639px) {
-    .trait:last-child { border-bottom: none; }
-  }
+.trait:hover { border-color: var(--accent); }
 
-  .trait-index {
-    font-size: 0.625rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    min-width: 28px;
-    padding-top: 3px;
-  }
+.trait-num {
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  min-width: 28px;
+  padding-top: 3px;
+  flex-shrink: 0;
+}
 
-  .trait-body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-1);
-  }
+.trait-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
 
-  .trait-label {
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: #fff;
-    display: block;
-  }
+.trait-label {
+  display: block;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
 
-  .trait-desc {
-    font-size: 0.9375rem;
-    color: var(--color-dark-muted);
-    line-height: 1.6;
-  }
+.trait-desc {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
 </style>

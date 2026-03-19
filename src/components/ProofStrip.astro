@@ -1,28 +1,37 @@
 ---
-import { proofStrip } from '../data/content.js';
+import { proofBand } from '../data/content.js';
 ---
 
-<section class="proof-strip" aria-label="Credentials and working style">
+<section class="proof-band" aria-label="Credentials and working style">
   <div class="container">
 
-    <p class="strip-label reveal">{proofStrip.label}</p>
-
     <!-- Logo row -->
-    <div class="logo-track h-scroll reveal reveal-delay-1" role="list" aria-label="Organizations worked with">
-      {proofStrip.logos.map((logo) => (
+    <p class="band-label reveal">Featured in and built for</p>
+    <div
+      class="logo-row h-scroll reveal d1"
+      role="list"
+      aria-label="Organizations worked with"
+    >
+      {proofBand.logos.map((logo) => (
         <div class="logo-item" role="listitem">
-          <span class="logo-text">{logo.name}</span>
+          <span class="logo-name">{logo.name}</span>
         </div>
       ))}
     </div>
 
-    <div class="strip-rule reveal reveal-delay-2" role="separator" aria-hidden="true"></div>
+    <div class="rule band-rule reveal d2"></div>
 
     <!-- Chips -->
-    <p class="chip-label reveal reveal-delay-2">How I work</p>
-    <div class="chip-track h-scroll reveal reveal-delay-3" role="list" aria-label="Working style">
-      {proofStrip.chips.map((chip, i) => (
-        <span class={`chip ${i === 0 ? 'chip--active' : ''}`} role="listitem">{chip}</span>
+    <p class="band-label reveal d2">How I work</p>
+    <div
+      class="chip-row h-scroll reveal d3"
+      role="list"
+      aria-label="Working style"
+    >
+      {proofBand.chips.map((chip, i) => (
+        <span class={`chip ${i === 0 ? 'chip--on' : ''}`} role="listitem">
+          {chip}
+        </span>
       ))}
     </div>
 
@@ -30,109 +39,106 @@ import { proofStrip } from '../data/content.js';
 </section>
 
 <style>
-  .proof-strip {
-    background: var(--color-bg);
-    padding-block: var(--sp-12);
-    border-bottom: 1px solid var(--color-border);
-  }
+/* ── Section ─────────────────────────────────────────────── */
+.proof-band {
+  background: var(--cream);
+  padding-block: var(--sp-12);
+  border-bottom: 1px solid var(--border);
+}
 
-  /* ── Labels ──────────────────────────────────────────────────── */
-  .strip-label,
-  .chip-label {
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-bottom: var(--sp-4);
-  }
+/* ── Label ───────────────────────────────────────────────── */
+.band-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-4);
+}
 
-  .chip-label { margin-top: 0; }
+/* ── Logo row ────────────────────────────────────────────── */
+.logo-row {
+  /* Bleed to screen edges on mobile for scrollable feel */
+  margin-inline: calc(-1 * var(--sp-6));
+  padding-inline: var(--sp-6);
+  padding-bottom: var(--sp-1);
+  gap: var(--sp-3);
+}
 
-  /* ── Logo track ──────────────────────────────────────────────── */
-  .logo-track {
-    margin-inline: calc(-1 * var(--sp-6));
-    padding-inline: var(--sp-6);
-    margin-bottom: 0;
+@media (min-width: 640px) {
+  .logo-row {
+    margin-inline: 0;
+    padding-inline: 0;
+    flex-wrap: wrap;
+    overflow-x: visible;
     gap: var(--sp-3);
   }
+}
 
-  @media (min-width: 768px) {
-    .logo-track {
-      margin-inline: 0;
-      padding-inline: 0;
-      flex-wrap: wrap;
-      overflow-x: visible;
-    }
-  }
+.logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding-inline: var(--sp-6);
+  min-width: 130px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  transition: border-color var(--t), box-shadow var(--t);
+}
 
-  .logo-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    padding-inline: var(--sp-6);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
-    min-width: 130px;
-    transition: border-color var(--ease), box-shadow var(--ease);
-  }
+.logo-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 10px rgba(139, 104, 48, 0.1);
+}
 
-  .logo-item:hover {
-    border-color: var(--color-accent);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
+.logo-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
 
-  .logo-text {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: var(--color-text-muted);
-    white-space: nowrap;
-  }
+/* ── Rule ────────────────────────────────────────────────── */
+.band-rule { margin-block: var(--sp-8); }
 
-  /* ── Rule ────────────────────────────────────────────────────── */
-  .strip-rule {
-    height: 1px;
-    background: var(--color-border);
-    margin-block: var(--sp-8);
-  }
+/* ── Chip row ────────────────────────────────────────────── */
+.chip-row {
+  margin-inline: calc(-1 * var(--sp-6));
+  padding-inline: var(--sp-6);
+  padding-bottom: var(--sp-1);
+  gap: var(--sp-2);
+}
 
-  /* ── Chip track ──────────────────────────────────────────────── */
-  .chip-track {
-    margin-inline: calc(-1 * var(--sp-6));
-    padding-inline: var(--sp-6);
-    gap: var(--sp-2);
+@media (min-width: 640px) {
+  .chip-row {
+    margin-inline: 0;
+    padding-inline: 0;
+    flex-wrap: wrap;
+    overflow-x: visible;
   }
+}
 
-  @media (min-width: 768px) {
-    .chip-track {
-      margin-inline: 0;
-      padding-inline: 0;
-      flex-wrap: wrap;
-      overflow-x: visible;
-    }
-  }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--border);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+  white-space: nowrap;
+  transition: background var(--t), border-color var(--t), color var(--t);
+}
 
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-pill);
-    border: 1.5px solid var(--color-border);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text);
-    background: var(--color-surface);
-    white-space: nowrap;
-    transition: border-color var(--ease), background var(--ease), color var(--ease);
-  }
-
-  .chip:hover,
-  .chip--active {
-    background: var(--color-accent-subtle);
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
+.chip:hover,
+.chip--on {
+  background: var(--accent-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+}
 </style>

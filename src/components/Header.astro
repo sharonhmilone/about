@@ -1,5 +1,5 @@
 ---
-// Header: starts transparent over dark hero, frosts on scroll
+// Minimal sticky header — transparent over dark hero, frosts on scroll
 ---
 
 <header class="site-header">
@@ -12,57 +12,55 @@
 </header>
 
 <style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding-block: var(--sp-5);
-    /* Starts transparent — hero is dark so this blends in */
-    background: transparent;
-    transition: background 300ms ease, box-shadow 300ms ease;
-  }
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding-block: var(--sp-5);
+  background: transparent;
+  transition: background 300ms ease, box-shadow 300ms ease;
+}
 
-  .site-header.scrolled {
-    background: rgba(24, 22, 15, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
+.site-header.scrolled {
+  background: rgba(26, 23, 20, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
 
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .wordmark {
-    font-size: 1.125rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: #fff;
-    transition: color var(--ease);
-  }
+.wordmark {
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+  transition: color var(--t);
+}
 
-  .wordmark:hover { color: var(--color-accent); }
+.wordmark:hover { color: var(--accent); }
 
-  .header-cta {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: #fff;
-    border: 1.5px solid rgba(255,255,255,0.3);
-    padding: 0.4375rem 1.0625rem;
-    border-radius: var(--radius-pill);
-    transition: background var(--ease), border-color var(--ease);
-  }
+.header-cta {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  padding: 0.4375rem 1.0625rem;
+  border-radius: var(--r-pill);
+  transition: background var(--t), border-color var(--t), color var(--t);
+}
 
-  .header-cta:hover {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-  }
+.header-cta:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
 
-  .header-cta:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-  }
+.header-cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
 </style>

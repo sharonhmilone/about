@@ -1,0 +1,263 @@
+---
+import { featuredProof } from '../data/content.js';
+
+const featured = featuredProof.panels.find(p => p.featured);
+const supporting = featuredProof.panels.filter(p => !p.featured);
+---
+
+<section class="section featured-proof" id="work" aria-labelledby="proof-h">
+  <div class="container">
+
+    <header class="proof-header reveal">
+      <p class="eyebrow eyebrow-bronze">{featuredProof.eyebrow}</p>
+      <h2 class="s-heading" id="proof-h">
+        <span class="hl hl-thin">Proof of</span>
+        <span class="hl hl-heavy">Work.</span>
+      </h2>
+      <p class="s-sub">{featuredProof.subhead}</p>
+    </header>
+
+    <!-- Desktop: asymmetric grid. Mobile: stacked. -->
+    <div class="proof-grid">
+
+      <!-- Featured panel — hero proof (dark bg) -->
+      {featured && (
+        <article
+          class="panel panel--featured reveal d1"
+          aria-labelledby="proof-featured"
+        >
+          <div class="panel-inner">
+            <span class="panel-category">{featured.category}</span>
+            <h3 class="panel-name" id="proof-featured">{featured.name}</h3>
+            <p class="panel-framing">{featured.framing}</p>
+            <div class="panel-details">
+              <div class="panel-block">
+                <span class="block-label">What I did</span>
+                <p class="block-text">{featured.what}</p>
+              </div>
+              <div class="panel-block">
+                <span class="block-label">Why it mattered</span>
+                <p class="block-text">{featured.why}</p>
+              </div>
+            </div>
+            <div class="panel-tags">
+              {featured.tags.map(t => <span class="tag tag-dark">{t}</span>)}
+            </div>
+          </div>
+        </article>
+      )}
+
+      <!-- Supporting panels column -->
+      <div class="supporting-col">
+        {supporting.map((panel, i) => (
+          <article
+            class={`panel panel--secondary reveal d${i + 2}`}
+            aria-labelledby={`proof-${panel.id}`}
+          >
+            <div class="panel-inner">
+              <span class="panel-category">{panel.category}</span>
+              <h3 class="panel-name" id={`proof-${panel.id}`}>{panel.name}</h3>
+              <p class="panel-framing">{panel.framing}</p>
+              <div class="panel-details">
+                <div class="panel-block">
+                  <span class="block-label">What I did</span>
+                  <p class="block-text">{panel.what}</p>
+                </div>
+                <div class="panel-block">
+                  <span class="block-label">Why it mattered</span>
+                  <p class="block-text">{panel.why}</p>
+                </div>
+              </div>
+              <div class="panel-tags">
+                {panel.tags.map(t => <span class="tag tag-bronze">{t}</span>)}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Section ─────────────────────────────────────────────── */
+.featured-proof {
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+}
+
+.proof-header { margin-bottom: var(--sp-12); }
+
+/* ─────────────────────────────────────────────────────────
+   PROOF GRID
+   Mobile:  stacked (featured first)
+   Tablet (640px+): featured full-width, supporting 2-col row below
+   Desktop (1024px+): featured left 58%, supporting right 42% (stacked)
+───────────────────────────────────────────────────────── */
+.proof-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+@media (min-width: 640px) {
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: var(--sp-5);
+  }
+
+  .supporting-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .proof-grid {
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 1fr;
+    align-items: stretch;
+  }
+
+  .panel--featured {
+    /* Featured spans full height of grid */
+    grid-row: 1 / 2;
+  }
+
+  .supporting-col {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
+/* ── Panel base ──────────────────────────────────────────── */
+.panel {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-inner {
+  padding: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  height: 100%;
+}
+
+@media (min-width: 640px) {
+  .panel-inner { padding: var(--sp-10); }
+}
+
+/* ── Featured panel (dark bg) ────────────────────────────── */
+.panel--featured {
+  background: var(--dark);
+  border: 1px solid var(--dark-border);
+}
+
+.panel--featured .panel-category {
+  color: var(--accent);
+}
+
+.panel--featured .panel-name {
+  color: #fff;
+}
+
+.panel--featured .panel-framing {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.panel--featured .block-label {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.panel--featured .block-text {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.panel--featured .panel-details {
+  border-top: 1px solid var(--dark-border);
+}
+
+/* ── Supporting panel (light bg) ────────────────────────── */
+.panel--secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: box-shadow var(--t), border-color var(--t), transform var(--t);
+}
+
+.panel--secondary:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 28px rgba(139, 104, 48, 0.08);
+  transform: translateY(-2px);
+}
+
+.panel--secondary .panel-details {
+  border-top: 1px solid var(--border);
+}
+
+/* ── Panel typography ────────────────────────────────────── */
+.panel-category {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.panel-name {
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.panel-framing {
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.panel-details {
+  padding-top: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  flex: 1;
+}
+
+.panel-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.block-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.block-text {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: auto;
+  padding-top: var(--sp-4);
+}
+</style>

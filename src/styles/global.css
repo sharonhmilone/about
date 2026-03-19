@@ -1,50 +1,55 @@
-/* ─── FONTS ──────────────────────────────────────────────────────────────── */
-/* Plus Jakarta Sans (body/UI), DM Serif Display (quotes), Great Vibes (script) */
-/* All loaded via <link> in Layout.astro */
+/*
+ * Global design system for sharonhmilone.github.io/about
+ * Fonts loaded via <link> in Layout.astro:
+ *   Plus Jakarta Sans (300–800, italic), DM Serif Display (regular + italic), Great Vibes
+ */
 
 /* ─── DESIGN TOKENS ──────────────────────────────────────────────────────── */
 :root {
-  /* Light palette — warm linen */
-  --color-bg:            #F4EFE6;
-  --color-surface:       #FDFAF6;
-  --color-text:          #1A1810;
-  --color-text-muted:    #6E6860;
-  --color-border:        #E2DAD0;
+  /* ── Light palette (warm cream) ── */
+  --cream:           #F2EDE3;   /* primary bg */
+  --cream-deep:      #EAE3D7;   /* alt section bg, slightly deeper */
+  --surface:         #FAF7F2;   /* card surfaces */
+  --text:            #1A1714;   /* warm near-black */
+  --text-muted:      #726860;   /* secondary text */
+  --border:          #DDD6CC;   /* warm dividers */
 
-  /* Accent — deep forest green (earthy, rich, not orange) */
-  --color-accent:        #2D4A3A;
-  --color-accent-mid:    #3D6050;
-  --color-accent-subtle: #E6EDEA;
+  /* ── Accent: earthy bronze / muted gold ── */
+  --accent:          #8B6830;
+  --accent-hover:    #7A5A25;
+  --accent-subtle:   #EDE4D4;   /* very light tan for accent bg */
 
-  /* Earthy color-block sections (soundbites, etc.) */
-  --color-accent-earth:      #243D30;
-  --color-accent-earth-dark: #1C3228;
+  /* ── Dark sections ── */
+  --dark:            #1A1714;   /* hero, video, footer */
+  --dark-card:       #251E15;   /* cards on dark bg */
+  --dark-border:     rgba(255, 255, 255, 0.08);
+  --dark-muted:      rgba(255, 255, 255, 0.45);
 
-  /* Dark palette */
-  --color-dark-bg:     #18160F;
-  --color-dark-card:   #22201A;
-  --color-dark-border: rgba(255,255,255,0.09);
-  --color-dark-muted:  rgba(255,255,255,0.45);
+  /* ── Earthy deep brown (Soundbites section) ── */
+  --earth:           #231B0E;
+  --earth-alt:       #2D2212;
 
-  /* Typography */
-  --font-sans:   'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-serif:  'DM Serif Display', Georgia, 'Times New Roman', serif;
-  --font-script: 'Great Vibes', cursive;
+  /* ── Typography ── */
+  --sans:   'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --serif:  'DM Serif Display', Georgia, serif;
+  --script: 'Great Vibes', cursive;
 
-  /* Spacing scale */
-  --sp-1:  0.25rem;  --sp-2:  0.5rem;   --sp-3:  0.75rem;
-  --sp-4:  1rem;     --sp-5:  1.25rem;  --sp-6:  1.5rem;
-  --sp-7:  1.75rem;  --sp-8:  2rem;     --sp-10: 2.5rem;
+  /* ── Spacing ── */
+  --sp-1: 0.25rem;   --sp-2: 0.5rem;    --sp-3: 0.75rem;
+  --sp-4: 1rem;      --sp-5: 1.25rem;   --sp-6: 1.5rem;
+  --sp-7: 1.75rem;   --sp-8: 2rem;      --sp-10: 2.5rem;
   --sp-12: 3rem;     --sp-16: 4rem;     --sp-20: 5rem;
-  --sp-24: 6rem;
+  --sp-24: 6rem;     --sp-32: 8rem;
 
-  /* Radii */
-  --radius-sm: 6px;   --radius-md: 12px;
-  --radius-lg: 20px;  --radius-pill: 100px;
+  /* ── Border radii ── */
+  --r-sm:   6px;
+  --r-md:   14px;
+  --r-lg:   22px;
+  --r-pill: 100px;
 
-  /* Transitions */
-  --ease: 200ms ease;
-  --ease-reveal: 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── Transitions ── */
+  --t:        200ms ease;
+  --t-reveal: 680ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ─── RESET ──────────────────────────────────────────────────────────────── */
@@ -66,9 +71,9 @@ html {
 }
 
 body {
-  background-color: var(--color-dark-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
+  background: var(--dark);       /* starts dark — hero is dark */
+  color: var(--text);
+  font-family: var(--sans);
   font-size: 1rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -80,12 +85,13 @@ a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 
 /* ─── GRAIN TEXTURE ──────────────────────────────────────────────────────── */
+/* Subtle noise overlay sitting above all content, adds warmth */
 .grain-layer {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.03;
+  opacity: 0.028;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 200px 200px;
@@ -100,26 +106,28 @@ ul { list-style: none; }
   padding-inline: var(--sp-6);
 }
 
-@media (min-width: 768px) { .container { padding-inline: var(--sp-8); } }
+@media (min-width: 640px) { .container { padding-inline: var(--sp-8); } }
+@media (min-width: 1024px) { .container { padding-inline: var(--sp-10); } }
 
-.section { padding-block: var(--sp-20); }
-@media (min-width: 768px) { .section { padding-block: var(--sp-24); } }
+/* Section rhythm */
+.section {
+  padding-block: var(--sp-20);
+}
+@media (min-width: 640px) { .section { padding-block: var(--sp-24); } }
 
 /* ─── TYPOGRAPHY WEIGHT CONTRAST ─────────────────────────────────────────── */
-/* Mix thin + heavy within one headline for expressive contrast */
+/* Expressive headline system: mix thin (300) + heavy (800) in one element */
 .hl {
   display: block;
-  font-size: inherit;
   line-height: 1.0;
   letter-spacing: -0.04em;
 }
-
-.hl-light  { font-weight: 300; }
+.hl-thin   { font-weight: 300; }
 .hl-heavy  { font-weight: 800; }
-.hl-accent { font-weight: 800; color: var(--color-accent-mid); }
+.hl-accent { font-weight: 800; color: var(--accent); }
 
-/* ─── SECTION TYPOGRAPHY ─────────────────────────────────────────────────── */
-.section-eyebrow {
+/* ─── SECTION LABELS ─────────────────────────────────────────────────────── */
+.eyebrow {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
@@ -127,38 +135,39 @@ ul { list-style: none; }
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-accent-mid);
   margin-bottom: var(--sp-5);
 }
 
-.section-eyebrow::before {
+.eyebrow::before {
   content: '';
   display: block;
-  width: 22px;
+  width: 20px;
   height: 2px;
   background: currentColor;
   flex-shrink: 0;
 }
 
-.eyebrow-dark { color: rgba(255,255,255,0.35); }
-.eyebrow-dark::before { background: var(--color-accent-mid); }
+.eyebrow-bronze { color: var(--accent); }
+.eyebrow-light  { color: rgba(255, 255, 255, 0.4); }
+.eyebrow-light::before { background: var(--accent); }
 
-.section-heading {
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
+/* Section heading (h2) */
+.s-heading {
+  font-size: clamp(2rem, 5vw, 3.25rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1.05;
 }
 
-.section-subhead {
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  color: var(--color-text-muted);
-  max-width: 520px;
-  line-height: 1.65;
+/* Section subhead */
+.s-sub {
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  color: var(--text-muted);
+  line-height: 1.7;
   margin-top: var(--sp-4);
+  max-width: 540px;
 }
-
-.section-subhead--light { color: var(--color-dark-muted); }
+.s-sub--light { color: var(--dark-muted); }
 
 /* ─── BUTTONS ────────────────────────────────────────────────────────────── */
 .btn {
@@ -166,89 +175,135 @@ ul { list-style: none; }
   align-items: center;
   gap: var(--sp-2);
   padding: 0.8125rem 1.625rem;
-  border-radius: var(--radius-pill);
+  border-radius: var(--r-pill);
+  font-family: var(--sans);
   font-size: 0.9375rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  transition: background var(--ease), color var(--ease), border-color var(--ease),
-    transform var(--ease), box-shadow var(--ease);
-  white-space: nowrap;
-  cursor: pointer;
   border: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t), color var(--t), border-color var(--t),
+    transform var(--t), box-shadow var(--t);
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--color-accent-mid);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-.btn-primary {
-  background: var(--color-accent);
+/* Filled bronze */
+.btn-bronze {
+  background: var(--accent);
   color: #fff;
-  border-color: var(--color-accent);
+  border-color: var(--accent);
 }
-
-.btn-primary:hover {
-  background: var(--color-accent-mid);
-  border-color: var(--color-accent-mid);
+.btn-bronze:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(45, 74, 58, 0.35);
+  box-shadow: 0 6px 20px rgba(139, 104, 48, 0.35);
 }
 
+/* Ghost on dark */
 .btn-ghost {
   background: transparent;
   color: #fff;
-  border-color: rgba(255,255,255,0.3);
+  border-color: rgba(255, 255, 255, 0.28);
 }
-
 .btn-ghost:hover {
-  border-color: rgba(255,255,255,0.65);
-  background: rgba(255,255,255,0.06);
+  border-color: rgba(255, 255, 255, 0.65);
+  background: rgba(255, 255, 255, 0.06);
   transform: translateY(-1px);
 }
 
-.btn-outline-dark {
+/* Outline on light */
+.btn-outline {
   background: transparent;
-  color: var(--color-text);
-  border-color: var(--color-border);
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-outline:hover {
+  border-color: var(--text);
+  transform: translateY(-1px);
 }
 
-.btn-outline-dark:hover {
-  border-color: var(--color-text);
-  transform: translateY(-1px);
+/* ─── TAGS / CHIPS ───────────────────────────────────────────────────────── */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3125rem 0.75rem;
+  border-radius: var(--r-pill);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag-bronze {
+  background: var(--accent-subtle);
+  color: var(--accent);
+  border: 1px solid rgba(139, 104, 48, 0.2);
+}
+
+.tag-dark {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 /* ─── SCROLL REVEAL ──────────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity var(--ease-reveal), transform var(--ease-reveal);
+  transform: translateY(28px);
+  transition: opacity var(--t-reveal), transform var(--t-reveal);
 }
-
 .reveal.is-visible { opacity: 1; transform: none; }
-
-.reveal-delay-1 { transition-delay: 80ms; }
-.reveal-delay-2 { transition-delay: 160ms; }
-.reveal-delay-3 { transition-delay: 240ms; }
-.reveal-delay-4 { transition-delay: 320ms; }
+.d1 { transition-delay: 80ms; }
+.d2 { transition-delay: 160ms; }
+.d3 { transition-delay: 240ms; }
+.d4 { transition-delay: 320ms; }
+.d5 { transition-delay: 400ms; }
 
 /* ─── HORIZONTAL SCROLL ──────────────────────────────────────────────────── */
 .h-scroll {
   display: flex;
-  gap: var(--sp-3);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding-bottom: var(--sp-2);
+}
+.h-scroll::-webkit-scrollbar { display: none; }
+.h-scroll > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }
 
-.h-scroll::-webkit-scrollbar { display: none; }
-.h-scroll > * { scroll-snap-align: start; flex-shrink: 0; }
+/* ─── DIVIDERS ───────────────────────────────────────────────────────────── */
+.rule {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+.rule-dark { background: var(--dark-border); }
 
 /* ─── FOCUS ──────────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--color-accent-mid);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* ─── UTILITY ────────────────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

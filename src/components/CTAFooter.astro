@@ -3,110 +3,123 @@ import { ctaFooter } from '../data/content.js';
 ---
 
 <footer id="contact">
-  <section class="cta-section" aria-labelledby="cta-heading">
-    <div class="container">
 
+  <!-- CTA section -->
+  <section class="cta-section" aria-labelledby="cta-h">
+    <div class="container cta-inner">
       <div class="cta-content reveal">
-        <p class="script-label" aria-label="Champion of Joy">Champion of Joy</p>
 
-        <h2 class="cta-heading" id="cta-heading">
-          <span class="hl hl-light" style="color:rgba(255,255,255,0.45)">{ctaFooter.heading.split(' ')[0]}</span>
-          <span class="hl hl-heavy" style="color:#fff">{ctaFooter.heading.split(' ').slice(1).join(' ')}</span>
+        <!-- Script label -->
+        <p class="script-line" aria-hidden="true">Champion of Joy</p>
+
+        <h2 class="cta-heading" id="cta-h">
+          <span class="hl hl-thin" style="color:rgba(255,255,255,0.35)">
+            {ctaFooter.heading.split(' ')[0]}
+          </span>
+          <span class="hl hl-heavy" style="color:#fff">
+            {ctaFooter.heading.split(' ').slice(1).join(' ')}
+          </span>
         </h2>
 
-        <p class="cta-subhead">{ctaFooter.subhead}</p>
+        <p class="cta-sub">{ctaFooter.subhead}</p>
 
-        <div class="cta-buttons">
-          {ctaFooter.ctas.map((cta) => (
+        <div class="cta-btns">
+          {ctaFooter.ctas.map(cta => (
             <a
               href={cta.href}
-              class={`btn ${cta.variant === 'primary' ? 'btn-primary' : 'btn-ghost'}`}
+              class={`btn btn-${cta.variant}`}
             >
               {cta.label}
             </a>
           ))}
         </div>
-      </div>
 
+      </div>
     </div>
   </section>
 
+  <!-- Bottom bar -->
   <div class="bottom-bar">
-    <div class="container bottom-inner">
+    <div class="container bar-inner">
       <span class="copyright">{ctaFooter.copyright}</span>
-      <span class="tagline-script" aria-hidden="true">Champion of Joy</span>
+      <span class="bar-script" aria-hidden="true">Champion of Joy</span>
     </div>
   </div>
+
 </footer>
 
 <style>
-  /* ── CTA section ─────────────────────────────────────────────── */
-  .cta-section {
-    background: var(--color-dark-bg);
-    padding-block: var(--sp-24);
-    border-top: 1px solid var(--color-dark-border);
-  }
+/* ── CTA section ─────────────────────────────────────────── */
+.cta-section {
+  background: var(--dark);
+  padding-block: var(--sp-24);
+  border-top: 1px solid var(--dark-border);
+}
 
-  .cta-content {
-    max-width: 760px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-6);
-  }
+.cta-inner {
+  /* Constrain content width for readability */
+}
 
-  /* Script label — uses calligraphy font */
-  .script-label {
-    font-family: var(--font-script);
-    font-size: clamp(2rem, 4vw, 3rem);
-    color: var(--color-accent);
-    font-weight: 400;
-    line-height: 1.2;
-  }
+.cta-content {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-7);
+}
 
-  .cta-heading {
-    font-size: clamp(3.5rem, 9vw, 7rem);
-    letter-spacing: -0.045em;
-    line-height: 1.0;
-  }
+/* Script decorative line */
+.script-line {
+  font-family: var(--script);
+  font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  color: var(--accent);
+  line-height: 1.2;
+}
 
-  .cta-subhead {
-    font-size: clamp(1rem, 1.5vw, 1.1875rem);
-    color: rgba(255,255,255,0.55);
-    max-width: 500px;
-    line-height: 1.7;
-  }
+/* Massive heading */
+.cta-heading {
+  font-size: clamp(3.5rem, 10vw, 7.5rem);
+  letter-spacing: -0.045em;
+  line-height: 1.0;
+}
 
-  .cta-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-3);
-    padding-top: var(--sp-2);
-  }
+.cta-sub {
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 480px;
+  line-height: 1.75;
+}
 
-  /* ── Bottom bar ──────────────────────────────────────────────── */
-  .bottom-bar {
-    background: #0F0E0A;
-    padding-block: var(--sp-5);
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+.cta-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  padding-top: var(--sp-2);
+}
 
-  .bottom-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--sp-3);
-  }
+/* ── Bottom bar ──────────────────────────────────────────── */
+.bottom-bar {
+  background: #100e09;
+  padding-block: var(--sp-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
 
-  .copyright {
-    font-size: 0.8125rem;
-    color: rgba(255,255,255,0.25);
-  }
+.bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
 
-  .tagline-script {
-    font-family: var(--font-script);
-    font-size: 1.25rem;
-    color: var(--color-accent);
-    opacity: 0.5;
-  }
+.copyright {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.22);
+}
+
+.bar-script {
+  font-family: var(--script);
+  font-size: 1.25rem;
+  color: var(--accent);
+  opacity: 0.5;
+}
 </style>
